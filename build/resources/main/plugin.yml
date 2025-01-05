@@ -1,0 +1,17 @@
+name: OpLogin
+version: '1.0-SNAPSHOT'
+main: Periklis20M.opLogin.OpLogin
+api-version: '1.21'
+commands:
+  opsetpass:
+    description: Set a password for an OP player.
+    usage: /opsetpass <player> <password>
+  oplogin:
+    description: Login as an OP player.
+    usage: /oplogin <password>
+  resetop:
+    description: Reset the password for an OP player.
+    usage: /resetop <player>
+  opreload:
+    description: Reload the OpLogin configuration.
+    usage: /opreload
