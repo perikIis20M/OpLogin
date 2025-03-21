@@ -50,7 +50,7 @@ processResources {
 
 task copyJar(type: Copy) {
     from tasks.jar
-    into 'C:/Users/tasos/AppData/Roaming/.feather/player-server/servers/58d41b34-9100-4922-9abd-e70c7b26ac0f/plugins'
+    into ''
 }
 
 build.finalizedBy(copyJar)
