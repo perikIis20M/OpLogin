@@ -4,16 +4,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class OpLoginCommand implements CommandExecutor {
+public class OpLogoutCommand implements CommandExecutor {
 
     private final PasswordManager passwordManager;
 
-    public OpLoginCommand(PasswordManager passwordManager) {
+    public OpLogoutCommand(PasswordManager passwordManager) {
         this.passwordManager = passwordManager;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return passwordManager.beginLoginFlow(sender, args);
+        return passwordManager.handleLogoutCommand(sender);
     }
 }

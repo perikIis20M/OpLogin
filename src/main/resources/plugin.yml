@@ -1,17 +1,26 @@
 name: OpLogin
-version: '1.2.1'
+version: '${version}'
 main: Periklis20M.opLogin.OpLogin
 api-version: '1.21'
+author: Periklis20M
+website: https://modrinth.com/user/periklis20m
+description: Secure operator login with locked privileges, sensitive command protection, and audit logging.
 commands:
   opsetpass:
     description: Set a password for an OP player.
     usage: /opsetpass <player> <password>
   oplogin:
-    description: Login as an OP player.
-    usage: /oplogin <password>
+    description: Unlock operator privileges for the current player.
+    usage: /oplogin
+  oplogout:
+    description: Lock your operator privileges again.
+    usage: /oplogout
   resetop:
     description: Reset the password for an OP player.
     usage: /resetop <player>
   opreload:
     description: Reload the OpLogin configuration.
     usage: /opreload
+  oplockdown:
+    description: Force all online operators back into the locked state.
+    usage: /oplockdown

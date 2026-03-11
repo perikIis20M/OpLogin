@@ -5,6 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
+
 public class ResetOpCommand implements CommandExecutor {
 
     private final PasswordManager passwordManager;
@@ -16,7 +18,7 @@ public class ResetOpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            sender.sendMessage("§cThis command can only be executed from the console.");
+            sender.sendMessage(passwordManager.getMessage("messages.console-only"));
             return false;
         }
 
@@ -25,14 +27,16 @@ public class ResetOpCommand implements CommandExecutor {
             return false;
         }
 
-        String player = args[0];
-
-        if (passwordManager.resetPassword(player)) {
-            sender.sendMessage("Password reset for " + player);
-            return true;
+        String playerName = args[0];
+        if (!passwordManager.resetPassword(playerName)) {
+            sender.sendMessage("Failed to reset password for " + playerName);
+            return false;
         }
 
-        sender.sendMessage("Failed to reset password for " + player);
-        return false;
+        sender.sendMessage(passwordManager.getPrefixedMessage(
+            "messages.password-reset",
+            Map.of("%player%", playerName)
+        ));
+        return true;
     }
-} 
+}

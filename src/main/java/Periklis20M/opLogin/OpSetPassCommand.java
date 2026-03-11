@@ -1,5 +1,6 @@
 package Periklis20M.opLogin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,7 @@ public class OpSetPassCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            sender.sendMessage("§cThis command can only be executed from the console.");
+            sender.sendMessage(passwordManager.getMessage("messages.console-only"));
             return false;
         }
 
@@ -25,15 +26,19 @@ public class OpSetPassCommand implements CommandExecutor {
             return false;
         }
 
-        String player = args[0];
+        String playerName = args[0];
         String password = args[1];
-
-        if (passwordManager.setPassword(player, password)) {
-            sender.sendMessage("Password set for " + player);
-            return true;
+        if (!passwordManager.setPassword(playerName, password)) {
+            sender.sendMessage(passwordManager.getCredentialValidationMessage(password));
+            return false;
         }
 
-        sender.sendMessage("Failed to set password for " + player);
-        return false;
+        Player onlinePlayer = Bukkit.getPlayerExact(playerName);
+        if (onlinePlayer != null && onlinePlayer.isOp()) {
+            passwordManager.lockPlayer(onlinePlayer);
+        }
+
+        sender.sendMessage(passwordManager.getPrefixedMessage("messages.password-set", java.util.Map.of("%player%", playerName)));
+        return true;
     }
-} 
+}
